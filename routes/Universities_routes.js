@@ -26,7 +26,8 @@ router.route('/')
     }).catch(next)
 })
 
-
-
 .put(uniController.putUni)
+
+router.route('/:id')
+.get(uniController.getUnibyId)
 module.exports=router
