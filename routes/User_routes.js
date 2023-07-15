@@ -8,4 +8,7 @@ router.route('/register')
 router.route('/login')
 .post(userController.login)
 
+router.route('/')
+.get(userController.getAlluser)
+
 module.exports=router

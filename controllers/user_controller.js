@@ -1,5 +1,6 @@
 const User=require('../models/User')
 const bcrypt=require('bcryptjs')
+const jwt=require('jsonwebtoken')
 const registeruser=((req,res,next)=>{
     User.findOne({name:req.body.name})
         .then(user=>{
@@ -41,16 +42,40 @@ const login=(req, res,next)=>{
                 res.status(400)
                 return next(err)
             }
-            res.status(200).json({
-                status:'Login successful',
-                data:user
-            })
+            let data ={
+                userId: user._id, 
+                username: user.username,
+                role:user.role
+            }
+            jwt.sign(data, process.env.SECRET,
+                {'expiresIn':'1d'},(err,token)=>{
+                   if(err) return next(err)
+                   res.status(200).json({
+                   success:true,
+                   message:'login successful',
+                   token:token    
+                              })
+                })
         })
     })
 }
 
-
+const getAlluser=(req,res, next)=>{
+    User.find()
+    .then((user)=>{
+        res.status(200).json({
+            success: true,
+            message: "List of User",
+            data: user})
+    }).catch( (err) => {
+        res.status(500).json({
+            success: false,
+            message: err,
+        });
+    });
+}
 module.exports={
     registeruser,
-    login
+    login,
+    getAlluser
 }

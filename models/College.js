@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const uniSchema=mongoose.Schema({
+const collegeSchema=mongoose.Schema({
     overview:{
         type:String,
         reuqired:true,
@@ -37,14 +37,14 @@ const uniSchema=mongoose.Schema({
         type:String,
         requied:true
     },
-    link:{
+    image:{
         type:String,   
         required:true,
     },
-    image:{
-        type:String,   
+    link:{
+        type:String,
         required:true,
     }
 
 })
-module.exports = mongoose.model('Universities',uniSchema)
+module.exports = mongoose.model('College',collegeSchema)
